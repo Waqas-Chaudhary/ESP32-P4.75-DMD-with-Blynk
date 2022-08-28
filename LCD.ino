@@ -1,7 +1,7 @@
-char ssid[] = "Chaudhary";
-char pass[] = "Madagascar";
-String Name = "Ms.Fazaila Ali Qazi";
-String Post = "Director Student Affairs";
+char ssid[] = "Wifi Name";
+char pass[] = "";
+String Name = "Name";
+String Post = "Post";
 String status_string = "N/A";
 int Door_out_pin = 19;
 int Lights_out_pin = 21;
@@ -10,9 +10,9 @@ int extra_pin = 23;
 
 
 
-#define BLYNK_TEMPLATE_ID "TMPLQNYoPB1X"
-#define BLYNK_DEVICE_NAME "RAAS"
-#define BLYNK_AUTH_TOKEN "derjv04Q9fp3h9poVBYDGYIN27PUoyqT"
+#define BLYNK_TEMPLATE_ID ""
+#define BLYNK_DEVICE_NAME ""
+#define BLYNK_AUTH_TOKEN ""
 #define BLYNK_PRINT Serial
 #include <WiFi.h>
 #include <WiFiClient.h>
@@ -441,38 +441,23 @@ void display_rgbBitmap(uint8_t bmp_num) {
 }
 
 
-void display_scrollText()
+void display_scrollText(String s)
 {
   matrix->clear();
   matrix->setTextWrap(false);  // we don't wrap text so it scrolls nicely
   matrix->setTextSize(2);
   matrix->setRotation(0);
-  for (int8_t x = 0; x <= 127; x++)
+  for (int8_t x = 64; x >= -127; x--)
   {
     matrix->clear();
-    matrix->setCursor(x, 1);
-    matrix->setTextColor(LED_GREEN_HIGH);
-    matrix->print("Hello");
-    matrix->setCursor(128 - x, 1);
-    matrix->setTextColor(LED_ORANGE_HIGH);
-    matrix->print("World");
+    matrix->setCursor(x, 0);
+    matrix->setTextColor(LED_RED_HIGH);
+    matrix->print(s);
     matrix->show();
-    delay(50);
+    delay(60);
   }
-  matrix->setRotation(3);
-  matrix->setTextColor(LED_BLUE_HIGH);
-  for (int8_t x = 64; x >= -10; x--) {
-    matrix->clear();
-    matrix->setCursor(x, mw / 2);
-    matrix->print("Rotate");
-    matrix->show();
-    delay(50);
-  }
-  matrix->setRotation(0);
-  matrix->setCursor(0, 0);
-  matrix->show();
 }
-void Set_Status(String n, String s, String st)
+void Set_Status()
 {
   matrix->clear();
   matrix->setTextWrap(false);  // we don't wrap text so it scrolls nicely
@@ -526,13 +511,13 @@ void setup()
   pinMode(Door_out_pin, OUTPUT);
   pinMode(extra_pin, OUTPUT);
   pinMode(LCD_pin, OUTPUT);
+  display_scrollText("Developedby:RAAS   ");
 }
-
 void loop()
 {
+
   Read_Switch();
   set_IO_Pins();
-  Serial.println(IN[0]);
   //static uint8_t pixmap_count = ((mw + 7) / 8) * ((mh + 7) / 8);
-  Set_Status(Name, Post, status_string);
+  Set_Status();
 }
