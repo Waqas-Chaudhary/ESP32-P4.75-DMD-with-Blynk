@@ -1,5 +1,5 @@
 char ssid[] = "Wifi Name";
-char pass[] = "";
+char pass[] = "Password";
 String Name = "Name";
 String Post = "Post";
 String status_string = "N/A";
